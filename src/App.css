@@ -203,3 +203,31 @@
 .delay-1 { animation-delay: 0.1s; }
 .delay-2 { animation-delay: 0.2s; }
 .delay-3 { animation-delay: 0.3s; }
+ /* Force the placeholder text to be light grey/white in dark mode */
+.custom-placeholder-dark::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+  opacity: 1 !important;
+}
+
+/* For Chrome/Opera/Safari */
+.custom-placeholder-dark::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* For Firefox */
+.custom-placeholder-dark::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+/* Custom Placeholder override for Dark Theme inputs */
+.dark-placeholder::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+  opacity: 1 !important;
+}
+
+/* Browser specific support safety tags */
+.dark-placeholder::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+.dark-placeholder::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}

@@ -4,8 +4,10 @@ import EditorPanel from './EditorPanel';
 import PreviewPanel from './PreviewPanel';
 import TeamSidebar from './TeamSidebar';
 import technifyLogo from '../assets/technify logo.jpeg';
+import KanbanBoard from "./KanbanBoard";
+import TeamChat from './TeamChat';
 
-export default function Workspace({ onLogout, isDarkMode, onToggleTheme }) {
+export default function Workspace({ onLogout, isDarkMode, onToggleTheme, activeTab, setActiveTab }) {
   // 1. Initial code structure template
   const initialCode = `// Welcome to Technify Workspace\n\nfunction greet() {\n  console.log("Hello, World!");\n}\n\ngreet();`;
 
@@ -120,6 +122,51 @@ return (
       <PreviewPanel output={output} setOutput={setOutput} isDarkMode={isDarkMode} />
     </div> {/* Closes Window 3 */}
   </div> {/* Closes row g-3 */}
-</div>
+
+ {/* ========================================== */}
+      {/* 🔄 CENTRAL DASHBOARD VIEW SWITCHER SWITCH  */}
+      {/* ========================================== */}
+      <div className="mt-5 border-bottom pb-2 mb-4 d-flex gap-4 border-secondary">
+        <button 
+          type="button"
+          className={`btn fw-bold border-0 p-0 position-relative ${activeTab !== 'chat' ? 'text-info' : 'text-secondary'}`}
+          onClick={() => setActiveTab('board')}
+          style={{ fontSize: '1.4rem', background: 'none' }}
+        >
+          <i className="bi bi-grid-3x3-gap-fill me-2"></i>Project Board
+          {activeTab !== 'chat' && (
+            <div className="position-absolute bottom-0 start-0 w-100 bg-info" style={{ height: '3px', marginBottom: '-10px' }}></div>
+          )}
+        </button>
+
+        <button 
+          type="button"
+          className={`btn fw-bold border-0 p-0 position-relative ${activeTab === 'chat' ? 'text-info' : 'text-secondary'}`}
+          onClick={() => setActiveTab('chat')}
+          style={{ fontSize: '1.4rem', background: 'none' }}
+        >
+          <i className="bi bi-chat-left-text-fill me-2"></i>Team Chat Channel
+          {activeTab === 'chat' && (
+            <div className="position-absolute bottom-0 start-0 w-100 bg-info" style={{ height: '3px', marginBottom: '-10px' }}></div>
+          )}
+        </button>
+      </div>
+
+      {/* 🚀 COMPONENT DISPLAY CONTAINER */}
+      {activeTab === 'chat' ? (
+        <div className="mt-2 animate-fade-in">
+          <TeamChat isDarkMode={isDarkMode} />
+        </div>
+      ) : (
+        <div className="mt-2 animate-fade-in">
+          <KanbanBoard 
+            isDarkMode={isDarkMode} 
+            activeTab={activeTab} 
+            setActiveTab={setActiveTab} 
+          />
+        </div>
+      )}
+
+    </div> // Main workspace container end tag
   );
 }

@@ -3,11 +3,12 @@ import Auth from './components/Auth';
 import Workspace from './components/Workspace';
 import WelcomeSplash from './components/WelcomeSplash'; // Imported safely
 
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isInitializing, setIsInitializing] = useState(false); // New loader state
   const [darkMode, setDarkMode] = useState(true); // Defaulting to dark mode!
-
+ const [activeTab, setActiveTab] = useState('board');
   // Trigger the loading splash screen the moment login is successful
   const handleLoginSuccess = () => {
     setIsAuthenticated(true);
@@ -26,8 +27,7 @@ function App() {
 
   // Toggle helper function
   const toggleTheme = () => setDarkMode(!darkMode);
-
-  return (
+return (
     <div className={darkMode ? '' : 'light-theme'}>
       {!isAuthenticated ? (
         // 1. Show Auth screen if not logged in
@@ -36,8 +36,14 @@ function App() {
         // 2. Show Splash screen temporarily upon successful login
         <WelcomeSplash />
       ) : (
-        // 3. Show your completely untouched Workspace component layout
-        <Workspace onLogout={() => setIsAuthenticated(false)} isDarkMode={darkMode} onToggleTheme={toggleTheme} />
+        // 3. Show your Workspace layout
+        <Workspace 
+          onLogout={() => setIsAuthenticated(false)} 
+          isDarkMode={darkMode} 
+          onToggleTheme={toggleTheme} 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab}
+        />
       )}
     </div>
   );
